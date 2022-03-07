@@ -284,8 +284,8 @@ def main():
     test_datasets = ['DUTS_Test','HKU-IS','DUT','THUR']
     for dataset in test_datasets:
         image_dir = os.path.join(os.getcwd(), './../testing/', 'img',dataset)
-        folder_pred = os.path.join(os.getcwd(), '../testing/','final_patch24_pseudo_dino_edge_pre_trans_' + model_name + '_results' + os.sep)
-        prediction_dir = os.path.join(os.getcwd(), '../testing/', 'final_patch24_pseudo_dino_edge_pre_trans_' + model_name + '_results' , dataset+ os.sep)
+        folder_pred = os.path.join(os.getcwd(), '../testing/','output_' + model_name + '_results' + os.sep)
+        prediction_dir = os.path.join(os.getcwd(), '../testing/', 'output_' + model_name + '_results' , dataset+ os.sep)
         model_dir = os.path.join(os.getcwd(), 'saved_models', 'final_patch32_pseudo_dino_edge_pre_trans_' + model_name, model_name + '_bce_epoch_139_train_fulldino.pth')
 
         if (os.path.exists(folder_pred) == False):
@@ -313,7 +313,6 @@ def main():
         if torch.cuda.is_available():
 
             dino.load_state_dict(torch.load(model_dir))
-            #net.load_state_dict(torch.load(os.path.join(os.getcwd(), 'saved_models', 'pseudo_dino_edge_pre_trans_' + model_name, model_name + '_bce_epoch_89_train.pth')))
             dino.cuda()
         else:
             net.load_state_dict(torch.load(model_dir, map_location='cpu'))
