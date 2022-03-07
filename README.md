@@ -75,8 +75,6 @@ python compute_metrics.py
 
 
 ## Acknowledgements
-Thanks to Amir Sadeghian, Renliang Weng and Jinghao Shi, for having insightful and knowledgable discussions throught my internship
-
 Thanks to authors of U2Net and DINO for sharing their code. Most of the code is borrowed from the U2Net and DINO methods
 ```
 https://github.com/xuebinqin/U-2-Net
