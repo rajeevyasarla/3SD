@@ -37,17 +37,9 @@ Recent works show that features extracted from classification tasks provide impo
     |   |   |   └── ......
 ```
 
-## BN-Aug
-Follow the below steps to create Synthetic dataset:
-1. To generate stitched images run image_stitch.py
-```    
-    python image_stitch.py
-```
-2. Download the DoveNet code from below link and follow their steps to generate realistic images
-```   
-    https://github.com/bcmi/Image-Harmonization-Dataset-iHarmony4/tree/master/DoveNet
-```
-3. either run u2net_train.py (Training code will be released soon)
+## BN
+
+1. either run u2net_train.py (Training code will be released soon)
 ```
 modify line1 in model/__init__.py as "from .u2net_transformer import U2NET"
 For training:
@@ -55,7 +47,7 @@ python u2net_train.py
 For testing:
 python u2net_test.py
 ```
-4. or run following commands to train and test (Training code will be released soon)
+2. or run following commands to train and test (Training code will be released soon)
 ```
 For training:
 python u2net_train_fullysup_final.py
@@ -72,11 +64,9 @@ Note we used step 3 while reporting the numbers in the paper and presentation. c
 ```
     python u2net_test_pseudo_dino_final.py
 ```
-3. download pretrained models for self-supervised 3sd
-```angular2html
-https://www.dropbox.com/sh/so5um1rfut30f03/AACSfTYBkJlExWjQ29Ovv7LAa?dl=0
-```
-3SD results are available at Google Drive()
+3. download pretrained models for self-supervised 3sd [Dropbox](https://www.dropbox.com/sh/so5um1rfut30f03/AACSfTYBkJlExWjQ29Ovv7LAa?dl=0)
+
+3SD results are available at [Google Drive](https://drive.google.com/file/d/1cVTZQmPitovx142pDMl3_l3KUAXNLjkB/view?usp=sharing)
 ## Evaluation
 For computing metrics run the following command
 ```angular2html
