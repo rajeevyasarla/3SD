@@ -13,7 +13,7 @@ Recent works show that features extracted from classification tasks provide impo
 ## Dataset structure
 1. download the dataset DUTS (http://saliencydetection.net/duts/)
 2. download test datasets (https://drive.google.com/open?id=11rPRBzqxdRz0zHYax995uvzQsZmTR4A7)
-3. edge maps are obtained using : http://saliencydetection.net/duts/ . Thanks to Zhang et al. for providing the edge maps for DUTS dataset (download)[https://drive.google.com/file/d/15uasGpd6fRUtpwo21LovFtzZBUh0zHF0/view?usp=sharing.]
+3. edge maps are obtained using : http://saliencydetection.net/duts/ . Thanks to Zhang et al. for providing the edge maps for DUTS dataset. [edge maps download](https://drive.google.com/file/d/15uasGpd6fRUtpwo21LovFtzZBUh0zHF0/view?usp=sharing.)
 ```
    .
     ├── data 
