@@ -12,7 +12,7 @@ Recent works show that features extracted from classification tasks provide impo
 3. Pytorch version >=1.0
 4. CPU or NVIDIA GPU + CUDA CuDNN (CUDA 9.0)
 
-## Dataset structure
+## Dataset
 1. download the dataset DUTS (http://saliencydetection.net/duts/)
 2. download test datasets (https://drive.google.com/open?id=11rPRBzqxdRz0zHYax995uvzQsZmTR4A7)
 3. edge maps are obtained using pretrained [RCF](https://github.com/yun-liu/rcf). Thanks to Zhang et al. for providing the edge maps for DUTS dataset. [edge maps download](https://drive.google.com/file/d/15uasGpd6fRUtpwo21LovFtzZBUh0zHF0/view?usp=sharing.)
