@@ -484,35 +484,14 @@ class Edge_Dec(nn.Module):
 
 
 class Class_Dec(nn.Module):
-    def __init__(self, input_ch, Num_classes, img_size,patch_size):
+    def __init__(self, input_ch, Num_classes):
         super(Class_Dec,self).__init__()
         self.fc_layer1 = nn.Conv2d(input_ch, Num_classes, kernel_size=1, stride=1,padding=0, bias=False)
         self.fc_layer_bag = nn.Conv2d(input_ch, Num_classes, kernel_size=1, stride=1, padding=0, bias=False)
         self.pool = nn.MaxPool2d(2, stride=2, ceil_mode=True)
-        self.image_size = img_size
-        self.patch_size = patch_size
 
-        self.side1 = nn.Conv2d(64, input_ch//2, 3, padding=1)
-        self.side2 = nn.Conv2d(128, input_ch//2, 3, padding=1)
-        self.side3 = nn.Conv2d(256, input_ch//2, 3, padding=1)
-        self.side4 = nn.Conv2d(512, input_ch//2, 3, padding=1)
-        self.side5 = nn.Conv2d(512, input_ch//2, 3, padding=1)
-        self.side6 = nn.Conv2d(512, input_ch//2, 3, padding=1)
-        self.relu = nn.ReLU(inplace=True)
-        self.side_tx = nn.Conv2d(384, input_ch//2, 3, padding=1)
-        self.bag_pool = nn.AdaptiveAvgPool2d((self.image_size // self.patch_size, self.image_size // self.patch_size))
-
-    def forward(self,hx1,hx2,hx3,hx4,hx5,hx6,txc):
+    def forward(self,class_input):
         #print("class")
-        cx1 = self.relu(self.side1(hx1))
-        cx2 = cx1 + _upsample_like(self.relu(self.side2(hx2)),cx1)
-        cx3 = cx2 + _upsample_like(self.relu(self.side3(hx3)),cx1)
-        cx4 = cx3 + _upsample_like(self.relu(self.side4(hx4)),cx1)
-        cx5 = cx4 + _upsample_like(self.relu(self.side5(hx5)),cx1)
-        cx6 = cx5 + _upsample_like(self.relu(self.side6(hx6)),cx1)
-        txc = _upsample_like(txc,cx1)
-        txc = self.relu(self.side_tx(txc))
-        class_input = torch.cat((cx6,txc),1)
         self.global_pool = F.upsample(class_input, size=[1,1], mode='bilinear')
         output = self.fc_layer1(self.global_pool)
         B,C,H,W = output.shape
@@ -520,9 +499,7 @@ class Class_Dec(nn.Module):
         cam_map = self.fc_layer1(class_input)
 
         #bag output
-        bag_input = self.bag_pool(class_input)
-        cam_map = self.fc_layer_bag(class_input)
-        bag_output = self.fc_layer_bag(bag_input)
+        bag_output = self.fc_layer_bag(class_input)
 
         return output,cam_map,bag_output
 
@@ -595,7 +572,7 @@ class U2NET(nn.Module):
         self.outconv = nn.Conv2d(7*out_ch,out_ch,1)
 
         # classification decoder
-        self.class_dec = Class_Dec(200,200,self.image_size,self.patch_size)
+        self.class_dec = Class_Dec(896,200)
 
     def _init_weights(self, m):
         if isinstance(m, nn.Linear):
@@ -666,34 +643,20 @@ class U2NET(nn.Module):
             if len(self.blocks) - i <= n:
                 output.append(self.norm(x))
         return output
-
-    def enc_trans(self,x):
-        F.upsample(x, size=[self.image_size, self.image_size], mode='bilinear')
-        tx = self.prepare_tokens(self.preprocess(x))
-        tx_res = tx
-        count = 0
-        for blk in self.blocks:
-            tx = blk(tx)
-            count = count + 1
-            if (count%4 == 0):
-                tx = tx_res +tx
-
-        tx = self.norm(tx_res)
-        tx = tx.transpose(1, 2)
-        B, N, C = tx.shape
-        tx_cl = tx[:,:,0]
-        tx = tx[:,:,1:]
-        #print(tx.shape)
-        tx_cl = F.upsample(tx_cl.reshape(B, N, 1, 1), size=[self.image_size // self.patch_size, self.image_size // self.patch_size], mode='bilinear')
-        #tx = F.upsample(tx.reshape(B, N, C, 1), size=[C - 1, 1], mode='bilinear')
-        tx = tx.reshape(B, N, self.image_size // self.patch_size, self.image_size // self.patch_size)
-        return tx+tx_cl
-
     def forward(self,x):
 
         hx = x
         #pdb.set_trace()
-        tx = self.enc_trans(x)
+        tx = F.upsample(x,size=[self.image_size,self.image_size],mode='bilinear')
+        tx = self.prepare_tokens(self.preprocess(tx))
+        for blk in self.blocks:
+            tx = blk(tx)
+        tx = self.norm(tx)
+        tx = tx.transpose(1,2)
+        B, N, C  = tx.shape
+        #print(B,N,C)
+        tx = F.upsample(tx.reshape(B,N,C,1),size=[C-1,1],mode='bilinear')
+        tx = tx.reshape(B,N,self.image_size//self.patch_size  ,self.image_size//self.patch_size )
 
         #stage 1
         hx1 = self.stage1(hx)
@@ -720,9 +683,9 @@ class U2NET(nn.Module):
         hx6up = _upsample_like(hx6,hx5)
 
         #-------------------- class decoder -------------------
-        #txc = tx#F.upsample(tx, size=hx5.shape[2:], mode='bilinear')
-        #class_input = torch.cat((F.upsample(hx6, size=txc.shape[2:], mode='bilinear'),txc),1)
-        pred_class,cam_map,bag_output = self.class_dec(hx1,hx2,hx3,hx4,hx5,hx6,tx)
+        txc = tx#F.upsample(tx, size=hx5.shape[2:], mode='bilinear')
+        class_input = torch.cat((F.upsample(hx6, size=txc.shape[2:], mode='bilinear'),txc),1)
+        pred_class,cam_map,bag_output = self.class_dec(class_input)
         #print(bag_output.shape,self.patch_size)
 
         txd = F.upsample(tx, size=hx5.shape[2:], mode='bilinear')
