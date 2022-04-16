@@ -16,29 +16,7 @@ Recent works show that features extracted from classification tasks provide impo
 1. download the dataset DUTS (http://saliencydetection.net/duts/)
 2. download test datasets (https://drive.google.com/open?id=11rPRBzqxdRz0zHYax995uvzQsZmTR4A7)
 3. edge maps are obtained using pretrained [RCF](https://github.com/yun-liu/rcf). Thanks to Zhang et al. for providing the edge maps for DUTS dataset. [edge maps download](https://drive.google.com/file/d/15uasGpd6fRUtpwo21LovFtzZBUh0zHF0/view?usp=sharing.)
-```
-   .
-    ├── data 
-    |   ├── train # Training  
-    |   |   ├── train_img                 
-    |   |   |   ├── Image1              
-    |   |   |   ├── Image2           
-    |   |   |   └── ......
-    |   |   ├── train_edge          
-    
-    |   |   |   ├── Image1              
-    |   |   |   ├── Image2           
-    |   |   |   └── ......
-    |   |   ├── train_label         
-    |   |   |   ├── Image1              
-    |   |   |   ├── Image2           
-    |   |   |   └── ......
-    |   └── test  # Testing
-    |   |   ├── test_img                 
-    |   |   |   ├── Image1              
-    |   |   |   ├── Image2           
-    |   |   |   └── ......
-```
+
 
 ## BN
 
