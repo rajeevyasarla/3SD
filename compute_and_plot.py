@@ -175,8 +175,7 @@ gt_path = './testing/gt/'
 
 
 
-target_path = './testing/output_u2net_results/'#'/media/rajeev/HD2/saliency_comparemethods/saliency maps_mfnnet/densenet169-salmap/'#'#'./../compare_methods/EDNS/' #'./testing_old/final_patch32_pseudo_dino_edge_pre_trans_u2net_results/'
-
+target_path = './testing/output_u2net_results/'
 test_datasets = ['DUTS']
 output_dir = './plots/'
 
