@@ -40,6 +40,11 @@ Note we used step 3 while reporting the numbers in the paper and presentation. c
 
 3SD results are available at [Google Drive](https://drive.google.com/file/d/1cVTZQmPitovx142pDMl3_l3KUAXNLjkB/view?usp=sharing)
 
+## Evaluation
+For computing metrics run the following command
+```
+python compute_metrics.py
+```
 
 ## Acknowledgements
 Thanks to authors of U2Net and DINO for sharing their code. Most of the code is borrowed from the U2Net and DINO methods
