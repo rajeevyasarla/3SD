@@ -530,7 +530,7 @@ for epoch in range(0,epoch_num):
         # forward + backward + optimize
         dino_loss = 0
         
-        if (epoch>=100 and ite_num % 2 == 0):
+        if (ite_num % 2 == 0):
             dino_loss = dino(inputs_v)
             if dino_loss == dino_loss and dino_loss !=0 : 
                 print("dino_loss : %3f "%(dino_loss))
@@ -541,7 +541,7 @@ for epoch in range(0,epoch_num):
 
         dino_optimizer.zero_grad()
         dino_bag_loss = 0
-        if (epoch>=100 and ite_num % 2 == 1):
+        if (ite_num % 2 == 1):
             dino_bag_loss = dino.bag_loss(inputs_v)
             if dino_loss == dino_loss and dino_bag_loss != 0:
                 print("dino_bag_loss : %3f " % (dino_bag_loss))
@@ -559,7 +559,7 @@ for epoch in range(0,epoch_num):
         d0, d1, d2, d3, d4, d5, d6,  pred_edges, cam_map, bag_map, pred_class = dino.student_encoder(inputs_v)
         
 
-        if epoch>=200:
+        if epoch>=120:
             norm_cam = norm_cam_map(cam_map.detach().data,bag_map.detach().data,pred_class)
             norm_cam[norm_cam<0.5] = 0
             pseudo_label_gts = gated_edge(norm_cam,norm_cam+edges_v-(norm_cam*edges_v))
