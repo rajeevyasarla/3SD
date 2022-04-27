@@ -19,9 +19,6 @@ Recent works show that features extracted from classification tasks provide impo
 
 
 ## BN
-
-
-
 Run following commands to train and test (Training code will be released soon)
 ```
 For training:
@@ -42,11 +39,6 @@ Note we used step 3 while reporting the numbers in the paper and presentation. c
 3. download pretrained models for self-supervised 3sd [Dropbox](https://www.dropbox.com/sh/so5um1rfut30f03/AACSfTYBkJlExWjQ29Ovv7LAa?dl=0)
 
 3SD results are available at [Google Drive](https://drive.google.com/file/d/1cVTZQmPitovx142pDMl3_l3KUAXNLjkB/view?usp=sharing)
-## Evaluation
-For computing metrics run the following command
-```angular2html
-python compute_metrics.py
-```
 
 
 ## Acknowledgements
