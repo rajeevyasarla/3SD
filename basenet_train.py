@@ -231,7 +231,7 @@ model_dir = os.path.join(os.getcwd(), 'saved_models', 'fullysup_patch32_' + mode
 if (os.path.isdir(model_dir)==False):
     os.mkdir(model_dir)
 epoch_num = 100000
-batch_size_train = 1
+batch_size_train = 10
 batch_size_val = 1
 train_num = 0
 val_num = 0
