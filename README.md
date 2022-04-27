@@ -31,15 +31,15 @@ python u2net_test.py
 2. or run following commands to train and test (Training code will be released soon)
 ```
 For training:
-python u2net_train_fullysup_final.py
+python basenet_train.py
 For testing:
 python u2net_test_pseudo_dino_final.py
 ```
 Note we used step 3 while reporting the numbers in the paper and presentation. corresponding pretrained model can be founded in the folder "saved_models/trans_syn_u2net"
 ## To train and test 3SD in self-supervised way:
-1. command for training  (Training code will be released soon)
+1. command for training  
 ```
-    python u2net_train_pseudo_dino_final.py
+    python 3SD_train.py
 ``` 
 2. command for testing
 ```
