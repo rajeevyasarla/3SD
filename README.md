@@ -20,15 +20,9 @@ Recent works show that features extracted from classification tasks provide impo
 
 ## BN
 
-1. either run u2net_train.py (Training code will be released soon)
+
 ```
-modify line1 in model/__init__.py as "from .u2net_transformer import U2NET"
-For training:
-python u2net_train.py
-For testing:
-python u2net_test.py
-```
-2. or run following commands to train and test (Training code will be released soon)
+Run following commands to train and test (Training code will be released soon)
 ```
 For training:
 python basenet_train.py
