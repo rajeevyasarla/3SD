@@ -227,7 +227,7 @@ syn_tra_label_dir = 'gt/'#os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'gt_aug' + 
 image_ext = '.jpg'
 label_ext = '.png'
 
-model_dir = os.path.join(os.getcwd(), 'saved_models', 'final_patch32_pseudo_dino_edge_pre_trans_' + model_name + os.sep)
+model_dir = os.path.join(os.getcwd(), 'saved_models', 'fullysup_patch32_' + model_name + os.sep)
 if (os.path.isdir(model_dir)==False):
     os.mkdir(model_dir)
 epoch_num = 100000
