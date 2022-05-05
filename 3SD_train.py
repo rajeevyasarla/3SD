@@ -202,7 +202,7 @@ def dino_loss_bag_fn(
     
     sim_student = torch.exp(torch.bmm(student_probs,student_probs.transpose(1,2))/student_temp)
     sim_teacher = torch.exp(torch.bmm(student_probs,teacher_probs.transpose(1,2))/teacher_temp)
-    denom = (pos_student_mask+neg_student_mask)*sim_student + (pos_teacher_mask+neg_teacher_mask)*sim_teacher
+    denom = (neg_student_mask)*sim_student + (neg_teacher_mask)*sim_teacher
     denom = denom.sum(dim=-1).view(B,H*W,1) +0.000001
     loss = pos_student_mask*sim_student/denom + (1-pos_student_mask)
     loss = -1*pos_student_mask*torch.log(loss) -1*pos_teacher_mask*torch.log(pos_teacher_mask*sim_teacher/denom + (1-pos_teacher_mask))
