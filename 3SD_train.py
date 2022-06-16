@@ -30,9 +30,9 @@ from model import U2NET
 from model import U2NETP
 import pdb
 
-from pytorch_grad_cam import GradCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, XGradCAM, EigenCAM, FullGrad
-from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
-from pytorch_grad_cam.utils.image import show_cam_on_image
+#from pytorch_grad_cam import GradCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, XGradCAM, EigenCAM, FullGrad
+#from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
+#from pytorch_grad_cam.utils.image import show_cam_on_image
 
 # ------- util tool functions ----------
 def exists(val):
@@ -558,7 +558,7 @@ for epoch in range(0,epoch_num):
         pseudo_label_gts = 0
         d0, d1, d2, d3, d4, d5, d6,  pred_edges, cam_map, bag_map, pred_class = dino.student_encoder(inputs_v)
         
-
+        edge_loss = 0
         if epoch>=120:
             norm_cam = norm_cam_map(cam_map.detach().data,bag_map.detach().data,pred_class)
             norm_cam[norm_cam<0.5] = 0
@@ -568,9 +568,9 @@ for epoch in range(0,epoch_num):
             pseudo_label_gts = (pseudo_label_gts-pseudo_label_gts.min(dim=1)[0].view(B, 1))/ (pseudo_label_gts.max(dim=1)[0].view(B, 1))
             pseudo_label_gts = pseudo_label_gts.view(B, C, H, W).detach().data
             loss2, loss = muti_bce_loss_fusion(d0, d1, d2, d3, d4, d5, d6 , pseudo_label_gts)
+            edge_loss = bce_loss(gated_edge(pseudo_label_gts,pred_edges), gated_edge(pseudo_label_gts,edges_v))
         
         smoothLoss_cur1 = sm_loss_weight * smooth_loss(d0, T.Grayscale()(inputs_v))
-        edge_loss = bce_loss(gated_edge(pseudo_label_gts,pred_edges), gated_edge(pseudo_label_gts,edges_v))
         loss += edge_loss + smoothLoss_cur1 
         if loss == loss:
             loss.backward()
