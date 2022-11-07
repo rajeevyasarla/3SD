@@ -218,9 +218,9 @@ tra_image_dir = 'img/'#os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'im_aug' + os.
 tra_label_dir = 'gt/'#os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'gt_aug' + os.sep)
 tra_edge_dir = 'edge/'#os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'gt_aug' + os.sep)
 
-syn_data_dir = './data/training/DUTS-TR/'#os.path.join(os.getcwd(), 'train_data' + os.sep)
-syn_tra_image_dir = 'img/'#os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'im_aug' + os.sep)
-syn_tra_label_dir = 'gt/'#os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'gt_aug' + os.sep)
+#syn_data_dir = './data/training/DUTS-TR/'#os.path.join(os.getcwd(), 'train_data' + os.sep)
+#syn_tra_image_dir = 'img/'#os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'im_aug' + os.sep)
+#syn_tra_label_dir = 'gt/'#os.path.join('DUTS', 'DUTS-TR', 'DUTS-TR', 'gt_aug' + os.sep)
 
 
 
@@ -252,20 +252,20 @@ for img_path in tra_img_name_list:
     tra_lbl_name_list.append(data_dir + tra_label_dir + imidx + label_ext)
     tra_edge_name_list.append(data_dir + tra_edge_dir + imidx + label_ext)
 
-syn_tra_img_name_list = list(glob.glob(syn_data_dir + syn_tra_image_dir + '*' + label_ext))
+#syn_tra_img_name_list = list(glob.glob(syn_data_dir + syn_tra_image_dir + '*' + label_ext))
 #pdb.set_trace()
-syn_tra_lbl_name_list = []
-for img_path in syn_tra_img_name_list:
-    img_name = img_path.split(os.sep)[-1]
-    aaa = img_name.split(".")
-    bbb = aaa[0:-1]
-    imidx = bbb[0]
-    for i in range(1,len(bbb)):
-        imidx = imidx + "." + bbb[i]
-    syn_tra_lbl_name_list.append(syn_data_dir + syn_tra_label_dir + imidx + label_ext)
+#syn_tra_lbl_name_list = []
+#for img_path in syn_tra_img_name_list:
+#    img_name = img_path.split(os.sep)[-1]
+#    aaa = img_name.split(".")
+#    bbb = aaa[0:-1]
+#    imidx = bbb[0]
+#    for i in range(1,len(bbb)):
+#        imidx = imidx + "." + bbb[i]
+#    syn_tra_lbl_name_list.append(syn_data_dir + syn_tra_label_dir + imidx + label_ext)
 #pdb.set_trace()
-tra_img_name_list += syn_tra_img_name_list
-tra_lbl_name_list += syn_tra_lbl_name_list
+#tra_img_name_list += syn_tra_img_name_list
+#tra_lbl_name_list += syn_tra_lbl_name_list
 print("---")
 print("train images: ", len(tra_img_name_list))
 print("train labels: ", len(tra_lbl_name_list))
