@@ -19,7 +19,7 @@ Recent works show that features extracted from classification tasks provide impo
 
 
 ## BN
-Run following commands to train and test (Training code will be released soon)
+Run following commands to train and test 
 ```
 For training:
 python basenet_train.py
